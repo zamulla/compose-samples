@@ -64,6 +64,7 @@ dependencies {
 
     // Image loading
     implementation(libs.coil.kt.compose)
+    implementation(libs.coil.network.okhttp)
 
     // Compose
     val composeBom = platform(libs.androidx.compose.bom)
