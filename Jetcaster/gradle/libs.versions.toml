@@ -63,6 +63,7 @@ spotless = "7.0.4"
 targetSdk = "33"
 version-catalog-update = "1.0.0"
 kotlinx-test = "1.8.20"
+htmlconverter = "1.1.0"
 
 [libraries]
 accompanist-adaptive = { module = "com.google.accompanist:accompanist-adaptive", version.ref = "accompanist" }
@@ -179,6 +180,7 @@ rssparser = { module = "com.prof18.rssparser:rssparser", version.ref = "rssparse
 kotlinx-test-core = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlinx-test" }
 kotlinx-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlinx-test" }
 kotlinx-test-annotations-common = { module = "org.jetbrains.kotlin:kotlin-test-annotations-common", version.ref = "kotlinx-test" }
+html-converter = { module = "be.digitalia.compose.htmlconverter:htmlconverter", version.ref = "htmlconverter" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
