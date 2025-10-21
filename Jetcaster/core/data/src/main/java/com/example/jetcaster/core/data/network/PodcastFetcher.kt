@@ -16,12 +16,9 @@
 
 package com.example.jetcaster.core.data.network
 
-import com.example.jetcaster.core.data.Dispatcher
-import com.example.jetcaster.core.data.JetcasterDispatchers
 import com.example.jetcaster.core.data.database.model.Category
 import com.example.jetcaster.core.data.database.model.Episode
 import com.example.jetcaster.core.data.database.model.Podcast
-import com.prof18.rssparser.RssParser
 import com.prof18.rssparser.RssParserBuilder
 import com.prof18.rssparser.model.RssChannel
 import com.prof18.rssparser.model.RssItem
@@ -31,7 +28,6 @@ import java.time.ZoneOffset
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
@@ -47,9 +43,9 @@ import okhttp3.OkHttpClient
  * @param okHttpClient [OkHttpClient] to use for network requests
  * @param ioDispatcher [CoroutineDispatcher] to use for running fetch requests.
  */
-class PodcastsFetcher @Inject constructor(
+class PodcastsFetcher(
     private val okHttpClient: OkHttpClient,
-    @Dispatcher(JetcasterDispatchers.IO) private val ioDispatcher: CoroutineDispatcher,
+    private val ioDispatcher: CoroutineDispatcher,
 ) {
 
     // Create an RSS parser using the provided OkHttpClient
@@ -191,7 +187,7 @@ private fun parseRssDate(dateString: String): Instant? {
         "EEE, dd MMM yyyy HH:mm:ss Z",
         "EEE, dd MMM yyyy HH:mm:ss zzz",
         "yyyy-MM-dd'T'HH:mm:ssX",
-        "yyyy-MM-dd'T'HH:mm:ss.SSSX"
+        "yyyy-MM-dd'T'HH:mm:ss.SSSX",
     )
 
     for (pattern in patterns) {

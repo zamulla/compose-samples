@@ -18,8 +18,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
+    //alias(libs.plugins.ksp)
     alias(libs.plugins.compose)
 }
 
@@ -118,9 +117,9 @@ dependencies {
     implementation(libs.androidx.palette)
 
     // Dependency injection
-    implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+    implementation(libs.koin.androidx.compose.navigation)
 
     // Compose
     implementation(libs.androidx.activity.compose)
