@@ -84,8 +84,9 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
-    implementation(libs.rometools.rome)
-    implementation(libs.rometools.modules)
+//    implementation(libs.rometools.rome)
+//    implementation(libs.rometools.modules)
+    implementation(libs.rssparser)
 
     coreLibraryDesugaring(libs.core.jdk.desugaring)
 

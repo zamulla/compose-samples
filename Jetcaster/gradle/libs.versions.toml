@@ -30,6 +30,7 @@ androidx-window = "1.4.0"
 androidxHiltNavigationCompose = "1.2.0"
 androix-test-uiautomator = "2.3.0"
 coil = "2.7.0"
+rssparser = "6.0.12"
 # @keep
 compileSdk = "36"
 coroutines = "1.10.2"
@@ -163,11 +164,10 @@ robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectr
 roborazzi = { module = "io.github.takahirom.roborazzi:roborazzi", version.ref = "roborazzi" }
 roborazzi-compose = { module = "io.github.takahirom.roborazzi:roborazzi-compose", version.ref = "roborazzi" }
 roborazzi-rule = { module = "io.github.takahirom.roborazzi:roborazzi-junit-rule", version.ref = "roborazzi" }
-rometools-modules = { module = "com.rometools:rome-modules", version.ref = "rome" }
-rometools-rome = { module = "com.rometools:rome", version.ref = "rome" }
 androidx-media3-session = {module = "androidx.media3:media3-session",version.ref = "media3"}
 androidx-media3-exoplayer = {module = "androidx.media3:media3-exoplayer", version.ref = "media3"}
 androidx-media3-common-ktx = { group = "androidx.media3", name = "media3-common-ktx", version.ref = "media3" }
+rssparser = { module = "com.prof18.rssparser:rssparser", version.ref = "rssparser" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
