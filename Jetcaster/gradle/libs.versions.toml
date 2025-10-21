@@ -61,6 +61,7 @@ spotless = "7.0.4"
 # @keep
 targetSdk = "33"
 version-catalog-update = "1.0.0"
+kotlinx-test = "1.8.20"
 
 [libraries]
 accompanist-adaptive = { module = "com.google.accompanist:accompanist-adaptive", version.ref = "accompanist" }
@@ -176,6 +177,9 @@ androidx-media3-session = {module = "androidx.media3:media3-session",version.ref
 androidx-media3-exoplayer = {module = "androidx.media3:media3-exoplayer", version.ref = "media3"}
 androidx-media3-common-ktx = { group = "androidx.media3", name = "media3-common-ktx", version.ref = "media3" }
 rssparser = { module = "com.prof18.rssparser:rssparser", version.ref = "rssparser" }
+kotlinx-test-core = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlinx-test" }
+kotlinx-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlinx-test" }
+kotlinx-test-annotations-common = { module = "org.jetbrains.kotlin:kotlin-test-annotations-common", version.ref = "kotlinx-test" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
