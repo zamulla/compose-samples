@@ -33,9 +33,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
-import coil.compose.AsyncImagePainter
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
+import coil3.compose.AsyncImage
+import coil3.compose.AsyncImagePainter
+import coil3.compose.LocalPlatformContext
+import coil3.compose.rememberAsyncImagePainter
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import com.example.jetcaster.core.designsystem.R
 
 @Composable
@@ -53,46 +56,16 @@ fun PodcastImage(
         return
     }
 
-    var imagePainterState by remember {
-        mutableStateOf<AsyncImagePainter.State>(AsyncImagePainter.State.Empty)
-    }
-
-    val imageLoader = rememberAsyncImagePainter(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(podcastImageUrl)
-            .crossfade(true)
-            .build(),
-        contentScale = contentScale,
-        onState = { state -> imagePainterState = state },
-    )
-
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center,
     ) {
-        when (imagePainterState) {
-            is AsyncImagePainter.State.Loading,
-            is AsyncImagePainter.State.Error,
-            -> {
-                Image(
-                    painter = painterResource(id = R.drawable.img_empty),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxSize(),
-                )
-            }
-            else -> {
-                Box(
-                    modifier = modifier
-                        .background(placeholderBrush)
-                        .fillMaxSize(),
-
-                )
-            }
-        }
-
-        Image(
-            painter = imageLoader,
+        AsyncImage(
+            model = ImageRequest.Builder(LocalPlatformContext.current)
+                .data(podcastImageUrl)
+                .crossfade(true)
+                .build(),
+            placeholder = painterResource(R.drawable.img_empty),
             contentDescription = contentDescription,
             contentScale = contentScale,
             modifier = modifier.then(imageModifier),
