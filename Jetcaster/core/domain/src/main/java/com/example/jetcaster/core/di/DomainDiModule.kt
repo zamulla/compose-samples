@@ -17,6 +17,7 @@
 package com.example.jetcaster.core.di
 
 import com.example.jetcaster.core.data.JetcasterDispatchers
+import com.example.jetcaster.core.data.JetcasterDispatchers.mainDispatcher
 import com.example.jetcaster.core.data.repository.CategoryStore
 import com.example.jetcaster.core.data.repository.EpisodeStore
 import com.example.jetcaster.core.data.repository.PodcastStore
@@ -25,12 +26,13 @@ import com.example.jetcaster.core.domain.GetLatestFollowedEpisodesUseCase
 import com.example.jetcaster.core.domain.PodcastCategoryFilterUseCase
 import com.example.jetcaster.core.player.EpisodePlayer
 import com.example.jetcaster.core.player.MockEpisodePlayer
+import kotlinx.coroutines.CoroutineDispatcher
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val domainModule = module {
     single<EpisodePlayer> {
-        MockEpisodePlayer(get(named(JetcasterDispatchers.MAIN)))
+        MockEpisodePlayer(get<CoroutineDispatcher>(mainDispatcher))
     }
 
     single {
