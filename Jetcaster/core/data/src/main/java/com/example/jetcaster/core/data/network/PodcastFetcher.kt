@@ -16,8 +16,6 @@
 
 package com.example.jetcaster.core.data.network
 
-import com.example.jetcaster.core.data.Dispatcher
-import com.example.jetcaster.core.data.JetcasterDispatchers
 import com.example.jetcaster.core.data.database.model.Category
 import com.example.jetcaster.core.data.database.model.Episode
 import com.example.jetcaster.core.data.database.model.Podcast
@@ -37,16 +35,14 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
-import java.util.*
-import javax.inject.Inject
 
 /**
  * A class which fetches some selected podcast RSS feeds.
  *
  * @param ioDispatcher [CoroutineDispatcher] to use for running fetch requests.
  */
-class PodcastsFetcher @Inject constructor(
-    @Dispatcher(JetcasterDispatchers.IO) private val ioDispatcher: CoroutineDispatcher,
+class PodcastsFetcher(
+    private val ioDispatcher: CoroutineDispatcher,
 ) {
 
     // Create an RSS parser

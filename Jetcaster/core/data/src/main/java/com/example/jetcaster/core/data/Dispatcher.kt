@@ -16,13 +16,13 @@
 
 package com.example.jetcaster.core.data
 
-import javax.inject.Qualifier
+import org.koin.core.qualifier.named
+// Define dispatcher qualifier constants
+object JetcasterDispatchers {
+    const val IO = "io_dispatcher"
+    const val MAIN = "main_dispatcher"
 
-@Qualifier
-@Retention(AnnotationRetention.RUNTIME)
-annotation class Dispatcher(val jetcasterDispatcher: JetcasterDispatchers)
-
-enum class JetcasterDispatchers {
-    Main,
-    IO,
+    // Convenience functions to get named qualifiers
+    val ioDispatcher = named(IO)
+    val mainDispatcher = named(MAIN)
 }
