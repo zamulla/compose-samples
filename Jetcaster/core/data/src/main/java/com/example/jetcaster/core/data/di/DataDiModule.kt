@@ -18,7 +18,8 @@ package com.example.jetcaster.core.data.di
 
 import android.content.Context
 import androidx.room.Room
-import coil.ImageLoader
+import coil3.ImageLoader
+import coil3.request.CachePolicy
 import com.example.jetcaster.core.data.BuildConfig
 import com.example.jetcaster.core.data.Dispatcher
 import com.example.jetcaster.core.data.JetcasterDispatchers
@@ -75,7 +76,7 @@ object DataDiModule {
     @Singleton
     fun provideImageLoader(@ApplicationContext context: Context): ImageLoader = ImageLoader.Builder(context)
         // Disable `Cache-Control` header support as some podcast images disable disk caching.
-        .respectCacheHeaders(false)
+        .networkCachePolicy(CachePolicy.DISABLED)
         .build()
 
     @Provides
