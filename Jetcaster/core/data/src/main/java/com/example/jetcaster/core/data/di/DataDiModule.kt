@@ -21,6 +21,8 @@ import coil3.ImageLoader
 import coil3.request.CachePolicy
 import com.example.jetcaster.core.data.BuildConfig
 import com.example.jetcaster.core.data.JetcasterDispatchers
+import com.example.jetcaster.core.data.JetcasterDispatchers.ioDispatcher
+import com.example.jetcaster.core.data.JetcasterDispatchers.mainDispatcher
 import com.example.jetcaster.core.data.database.JetcasterDatabase
 import com.example.jetcaster.core.data.database.dao.TransactionRunner
 import com.example.jetcaster.core.data.network.PodcastsFetcher
@@ -72,8 +74,8 @@ val dataModule = module {
     single { get<JetcasterDatabase>().podcastFollowedEntryDao() }
     single<TransactionRunner> { get<JetcasterDatabase>().transactionRunnerDao() }
 
-    single<CoroutineDispatcher>(named(JetcasterDispatchers.IO)) { Dispatchers.IO }
-    single<CoroutineDispatcher>(named(JetcasterDispatchers.MAIN)) { Dispatchers.Main }
+    single<CoroutineDispatcher>(ioDispatcher) { Dispatchers.IO }
+    single<CoroutineDispatcher>(mainDispatcher) { Dispatchers.Main }
 
     single<EpisodeStore> { LocalEpisodeStore(get()) }
 
@@ -97,8 +99,8 @@ val dataModule = module {
     single {
         PodcastsFetcher(
             okHttpClient = get<OkHttpClient>(),
-            ioDispatcher = get<CoroutineDispatcher>(named(JetcasterDispatchers.IO)),
-        )
+            ioDispatcher = get<CoroutineDispatcher>(ioDispatcher),
+            )
     }
 
     single {
@@ -108,7 +110,7 @@ val dataModule = module {
             episodeStore = get<EpisodeStore>(),
             categoryStore = get<CategoryStore>(),
             transactionRunner = get<TransactionRunner>(),
-            mainDispatcher = get<CoroutineDispatcher>(named(JetcasterDispatchers.MAIN)),
-        )
+            mainDispatcher = get<CoroutineDispatcher>(mainDispatcher),
+            )
     }
 }

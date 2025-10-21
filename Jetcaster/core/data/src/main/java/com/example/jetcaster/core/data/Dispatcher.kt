@@ -19,10 +19,6 @@ package com.example.jetcaster.core.data
 import org.koin.core.qualifier.named
 // Define dispatcher qualifier constants
 object JetcasterDispatchers {
-    const val IO = "io_dispatcher"
-    const val MAIN = "main_dispatcher"
-
-    // Convenience functions to get named qualifiers
-    val ioDispatcher = named(IO)
-    val mainDispatcher = named(MAIN)
+    val ioDispatcher = named("io_dispatcher")
+    val mainDispatcher = named("main_dispatcher")
 }
