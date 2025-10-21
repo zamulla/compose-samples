@@ -59,6 +59,8 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(projects.core.data)
     coreLibraryDesugaring(libs.core.jdk.desugaring)
-    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.test.core)
+    testImplementation(libs.kotlinx.test.junit)
+    testImplementation(libs.kotlinx.test.annotations.common)
     testImplementation(libs.kotlinx.coroutines.test)
 }
