@@ -18,7 +18,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    //alias(libs.plugins.ksp)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.compose)
 }
 
@@ -126,6 +126,7 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
     implementation(libs.koin.androidx.compose.navigation)
+    implementation(libs.koin.core)
 
     // Compose
     implementation(libs.androidx.activity.compose)

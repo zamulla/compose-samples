@@ -36,13 +36,13 @@ interface EpisodeStore {
      * Returns a flow containing the list of episodes associated with the podcast with the
      * given [podcastUri].
      */
-    fun episodesInPodcast(podcastUri: String, limit: Int = Integer.MAX_VALUE): Flow<List<EpisodeToPodcast>>
+    fun episodesInPodcast(podcastUri: String, limit: Int = Int.MAX_VALUE): Flow<List<EpisodeToPodcast>>
 
     /**
      * Returns a list of episodes for the given podcast URIs ordering by most recently published
      * to least recently published.
      */
-    fun episodesInPodcasts(podcastUris: List<String>, limit: Int = Integer.MAX_VALUE): Flow<List<EpisodeToPodcast>>
+    fun episodesInPodcasts(podcastUris: List<String>, limit: Int = Int.MAX_VALUE): Flow<List<EpisodeToPodcast>>
 
     /**
      * Add a new [Episode] to this store.
