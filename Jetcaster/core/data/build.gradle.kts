@@ -21,6 +21,12 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-opt-in=kotlin.time.ExperimentalTime")
+    }
+}
+
 android {
     namespace = "com.example.jetcaster.core.data"
     compileSdk =
@@ -61,6 +67,8 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.compose.runtime)
+
+    implementation(libs.kotlinx.datetime)
 
     // Image loading
     implementation(libs.coil.kt.compose)

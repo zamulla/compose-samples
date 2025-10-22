@@ -21,6 +21,12 @@ plugins {
     //alias(libs.plugins.ksp)
 }
 
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-opt-in=kotlin.time.ExperimentalTime")
+    }
+}
+
 android {
     compileSdk =
         libs.versions.compileSdk
