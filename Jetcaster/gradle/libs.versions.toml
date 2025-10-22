@@ -4,8 +4,9 @@
 #####
 [versions]
 accompanist = "0.37.3"
-android-material3 = "1.13.0-alpha13"
-androidGradlePlugin = "8.10.1"
+android-material3 = "1.13.0"
+androidGradlePlugin = "8.11.0"
+compose-multiplatform = "1.10.0-alpha01" # 1.10 needed for Material Expressive
 androidx-activity-compose = "1.10.1"
 androidx-appcompat = "1.7.1"
 androidx-compose-bom = "2025.09.00"
@@ -56,6 +57,7 @@ robolectric = "4.14.1"
 roborazzi = "1.45.1"
 rome = "2.1.0"
 room = "2.7.2"
+sqlite = "2.5.2"
 secrets = "2.0.1"
 spotless = "7.0.4"
 # @keep
@@ -133,14 +135,14 @@ androidx-wear-compose-navigation = { module = "androidx.wear.compose:compose-nav
 androidx-wear-compose-ui-tooling = { module = "androidx.wear.compose:compose-ui-tooling", version.ref = "androidx-wear-compose" }
 androidx-window = { module = "androidx.window:window", version.ref = "androidx-window" }
 androidx-window-core = { module = "androidx.window:window-core", version.ref = "androidx-window" }
+coil-kt-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
-koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
 koin-androidx-compose-navigation = { module = "io.insert-koin:koin-androidx-compose-navigation", version.ref = "koin" }
-coil-kt-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
-coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
+koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
 core-jdk-desugaring = { module = "com.android.tools:desugar_jdk_libs", version.ref = "jdkDesugar" }
 dagger-hiltandroidplugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
 googlemaps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "maps-compose" }
@@ -184,6 +186,8 @@ kotlinx-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", versio
 kotlinx-test-annotations-common = { module = "org.jetbrains.kotlin:kotlin-test-annotations-common", version.ref = "kotlinx-test" }
 html-converter = { module = "be.digitalia.compose.htmlconverter:htmlconverter", version.ref = "htmlconverter" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
+compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose-multiplatform" }
+androidx-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -201,3 +205,6 @@ roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secrets" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 version-catalog-update = { id = "nl.littlerobots.version-catalog-update", version.ref = "version-catalog-update" }
+androidx-room = { id = "androidx.room", version.ref = "room" }
+android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "androidGradlePlugin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
