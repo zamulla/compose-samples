@@ -20,6 +20,12 @@ plugins {
     alias(libs.plugins.kotlin.android)
 }
 
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-opt-in=kotlin.time.ExperimentalTime")
+    }
+}
+
 android {
     namespace = "com.example.jetcaster.core.domain.testing"
     compileSdk =
@@ -60,6 +66,8 @@ dependencies {
     implementation(projects.core.domain)
 
     coreLibraryDesugaring(libs.core.jdk.desugaring)
+
+    implementation(libs.kotlinx.datetime)
 
     testImplementation(libs.kotlinx.test.core)
     testImplementation(libs.kotlinx.test.junit)
