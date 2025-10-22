@@ -16,51 +16,33 @@
 
 
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.android.kotlin.multiplatform.library)
 }
 
-android {
-    namespace = "com.example.jetcaster.core.data.testing"
-    compileSdk =
-        libs.versions.compileSdk
-            .get()
-            .toInt()
-
-    defaultConfig {
-        minSdk =
-            libs.versions.minSdk
-                .get()
-                .toInt()
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
+kotlin {
+    androidLibrary {
+        namespace = "com.example.jetcaster.core.data.testing"
+        compileSdk = libs.versions.compileSdk.get().toInt()
+        minSdk = libs.versions.minSdk.get().toInt()
     }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
-            )
+    jvmToolchain(17)
+    compilerOptions {
+        freeCompilerArgs.add("-opt-in=kotlin.time.ExperimentalTime")
+    }
+
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+
+    // Desktop target (JVM)
+    jvm()
+
+    sourceSets {
+        commonMain.dependencies {
+            implementation(projects.core.data)
+            implementation(libs.kotlinx.coroutines.core)
         }
     }
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-}
-dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(projects.core.data)
-    coreLibraryDesugaring(libs.core.jdk.desugaring)
-    testImplementation(libs.kotlinx.test.core)
-    testImplementation(libs.kotlinx.test.junit)
-    testImplementation(libs.kotlinx.test.annotations.common)
-    testImplementation(libs.kotlinx.coroutines.test)
 }
