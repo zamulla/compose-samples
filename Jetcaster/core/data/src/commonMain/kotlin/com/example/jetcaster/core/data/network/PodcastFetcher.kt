@@ -22,8 +22,6 @@ import com.example.jetcaster.core.data.database.model.Podcast
 import com.prof18.rssparser.RssParser
 import com.prof18.rssparser.model.RssChannel
 import com.prof18.rssparser.model.RssItem
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
@@ -32,7 +30,8 @@ import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.format.DateTimeComponents
-import okhttp3.OkHttpClient
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.Instant
 
 /**
@@ -110,6 +109,21 @@ private fun RssChannel.toPodcastResponse(feedUrl: String): PodcastRssResponse {
     return PodcastRssResponse.Success(podcast, episodes, categories)
 }
 
+private fun parseRssDate(dateString: String): Instant? {
+
+    val formats = listOf(
+        RFC_1123_WITH_UTC,
+        DateTimeComponents.Formats.ISO_DATE_TIME_OFFSET,
+    )
+
+    formats.forEach { format ->
+        val parsed = format.parseOrNull(dateString)?.toInstantUsingOffset()
+        if (parsed != null) return parsed
+    }
+
+    return null
+}
+
 /**
  * Map an RSS-Parser [RssItem] instance to our own [Episode] data class.
  */
@@ -141,8 +155,8 @@ private fun RssItem.toEpisode(podcastUri: String): Episode? {
 }
 
 /**
-* Parse a duration string from iTunes format to a Duration object.
-*/
+ * Parse a duration string from iTunes format to a Duration object.
+ */
 private fun parseDuration(durationStr: String): Duration? {
     return try {
         // Handle different formats: HH:MM:SS, MM:SS, or seconds
@@ -155,17 +169,20 @@ private fun parseDuration(durationStr: String): Duration? {
                 val seconds = parts[2].toLongOrNull() ?: 0
                 (hours * 3600 + minutes * 60 + seconds).seconds
             }
+
             2 -> {
                 // MM:SS format
                 val minutes = parts[0].toLongOrNull() ?: 0
                 val seconds = parts[1].toLongOrNull() ?: 0
                 (minutes * 60 + seconds).seconds
             }
+
             1 -> {
                 // Just seconds
                 val seconds = parts[0].toLongOrNull() ?: 0
-                (seconds).seconds
+                seconds.seconds
             }
+
             else -> null
         }
     } catch (e: Exception) {
@@ -173,20 +190,3 @@ private fun parseDuration(durationStr: String): Duration? {
     }
 }
 
-/**
- * Parse an RSS date string to an Instant.
- */
-private fun parseRssDate(dateString: String): Instant? {
-
-    val formats = listOf(
-        RFC_1123_WITH_UTC,
-        DateTimeComponents.Formats.ISO_DATE_TIME_OFFSET,
-    )
-
-    formats.forEach { format ->
-        val parsed = format.parseOrNull(dateString)?.toInstantUsingOffset()
-        if (parsed != null) return parsed
-    }
-
-    return null
-}

@@ -16,12 +16,8 @@
 
 package com.example.jetcaster.core.data.di
 
-import android.content.Context
-import androidx.room.Room
-import coil3.ImageLoader
-import coil3.request.CachePolicy
-import com.example.jetcaster.core.data.BuildConfig
-import com.example.jetcaster.core.data.JetcasterDispatchers
+import androidx.room.immediateTransaction
+import androidx.room.useWriterConnection
 import com.example.jetcaster.core.data.JetcasterDispatchers.ioDispatcher
 import com.example.jetcaster.core.data.JetcasterDispatchers.mainDispatcher
 import com.example.jetcaster.core.data.database.JetcasterDatabase
@@ -34,46 +30,27 @@ import com.example.jetcaster.core.data.repository.LocalEpisodeStore
 import com.example.jetcaster.core.data.repository.LocalPodcastStore
 import com.example.jetcaster.core.data.repository.PodcastStore
 import com.example.jetcaster.core.data.repository.PodcastsRepository
-import java.io.File
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import okhttp3.Cache
-import okhttp3.OkHttpClient
-import okhttp3.logging.LoggingEventListener
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.qualifier.named
+import kotlinx.coroutines.IO
 import org.koin.dsl.module
 
-val dataModule = module {
-    single {
-        OkHttpClient.Builder()
-            .cache(Cache(File(androidContext().cacheDir, "http_cache"), (20 * 1024 * 1024).toLong()))
-            .apply {
-                if (BuildConfig.DEBUG) eventListenerFactory(LoggingEventListener.Factory())
-            }
-            .build()
-    }
-
-    single {
-        Room.databaseBuilder(androidContext(), JetcasterDatabase::class.java, "data.db")
-            // This is not recommended for normal apps, but the goal of this sample isn't to
-            // showcase all of Room.
-            .fallbackToDestructiveMigration()
-            .build()
-    }
-    single {
-        ImageLoader.Builder(androidContext())
-            // Disable `Cache-Control` header support as some podcast images disable disk caching.
-            .networkCachePolicy(CachePolicy.DISABLED)
-            .build()
-    }
-
+// TODO we should name this module properly
+val otherModule = module {
     single { get<JetcasterDatabase>().categoriesDao() }
     single { get<JetcasterDatabase>().podcastCategoryEntryDao() }
     single { get<JetcasterDatabase>().podcastsDao() }
     single { get<JetcasterDatabase>().episodesDao() }
     single { get<JetcasterDatabase>().podcastFollowedEntryDao() }
-    single<TransactionRunner> { get<JetcasterDatabase>().transactionRunnerDao() }
+
+    factory<TransactionRunner> {
+        TransactionRunner { tx ->
+            // TODO is this the 1:1 mapping?
+            get<JetcasterDatabase>().useWriterConnection {
+                it.immediateTransaction { tx() }
+            }
+        }
+    }
 
     single<CoroutineDispatcher>(ioDispatcher) { Dispatchers.IO }
     single<CoroutineDispatcher>(mainDispatcher) { Dispatchers.Main }
@@ -100,7 +77,7 @@ val dataModule = module {
     single {
         PodcastsFetcher(
             ioDispatcher = get<CoroutineDispatcher>(ioDispatcher),
-            )
+        )
     }
 
     single {
@@ -111,6 +88,6 @@ val dataModule = module {
             categoryStore = get<CategoryStore>(),
             transactionRunner = get<TransactionRunner>(),
             mainDispatcher = get<CoroutineDispatcher>(mainDispatcher),
-            )
+        )
     }
 }

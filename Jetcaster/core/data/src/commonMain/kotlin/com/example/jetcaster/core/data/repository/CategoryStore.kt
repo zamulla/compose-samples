@@ -30,7 +30,7 @@ interface CategoryStore {
      * Returns a flow containing a list of categories which is sorted by the number
      * of podcasts in each category.
      */
-    fun categoriesSortedByPodcastCount(limit: Int = Integer.MAX_VALUE): Flow<List<Category>>
+    fun categoriesSortedByPodcastCount(limit: Int = Int.MAX_VALUE): Flow<List<Category>>
 
     /**
      * Returns a flow containing a list of podcasts in the category with the given [categoryId],
@@ -42,7 +42,7 @@ interface CategoryStore {
      * Returns a flow containing a list of episodes from podcasts in the category with the
      * given [categoryId], sorted by the their last episode date.
      */
-    fun episodesFromPodcastsInCategory(categoryId: Long, limit: Int = Integer.MAX_VALUE): Flow<List<EpisodeToPodcast>>
+    fun episodesFromPodcastsInCategory(categoryId: Long, limit: Int = Int.MAX_VALUE): Flow<List<EpisodeToPodcast>>
 
     /**
      * Adds the category to the database if it doesn't already exist.
