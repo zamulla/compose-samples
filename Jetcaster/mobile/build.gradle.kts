@@ -19,7 +19,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.compose)
+    alias(libs.plugins.compose.compiler)
 }
 
 kotlin {
@@ -153,6 +153,7 @@ dependencies {
     implementation(libs.coil.kt.compose)
 
     implementation(projects.core.data)
+    implementation(projects.core.designsystem)
     implementation(projects.core.designsystem)
     implementation(projects.core.domain)
     //implementation(projects.glancewidget)
