@@ -55,7 +55,6 @@ kotlin {
 
             //Image loading
             implementation(libs.coil.kt.compose)
-            implementation(libs.coil.network.okhttp)
 
             // Dependency injection
             implementation(libs.koin.core)
@@ -70,6 +69,7 @@ kotlin {
         }
 
         androidMain.dependencies {
+            implementation(libs.coil.network.okhttp)
         }
 
         iosMain.dependencies {
