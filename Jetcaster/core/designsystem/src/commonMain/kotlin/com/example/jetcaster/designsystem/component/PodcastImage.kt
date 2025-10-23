@@ -30,16 +30,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
-import androidx.compose.ui.res.painterResource
+import org.jetbrains.compose.resources.painterResource
 import coil3.compose.AsyncImage
 import coil3.compose.AsyncImagePainter
 import coil3.compose.LocalPlatformContext
 import coil3.compose.rememberAsyncImagePainter
 import coil3.request.ImageRequest
 import coil3.request.crossfade
-import com.example.jetcaster.core.designsystem.R
+import com.example.jetcaster.core.designsystem.Res
+import com.example.jetcaster.core.designsystem.img_empty
 
 @Composable
 fun PodcastImage(
@@ -64,7 +64,7 @@ fun PodcastImage(
                 .data(podcastImageUrl)
                 .crossfade(true)
                 .build(),
-            placeholder = painterResource(R.drawable.img_empty),
+            placeholder = painterResource(Res.drawable.img_empty),
             contentDescription = contentDescription,
             contentScale = contentScale,
             modifier = modifier.then(imageModifier),
