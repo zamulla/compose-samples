@@ -157,6 +157,7 @@ dependencies {
     implementation(projects.core.designsystem)
     implementation(projects.core.domain)
     //implementation(projects.glancewidget)
+    implementation(projects.sharedUi)
     implementation(projects.core.domainTesting)
 
     coreLibraryDesugaring(libs.core.jdk.desugaring)
