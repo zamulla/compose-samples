@@ -107,7 +107,6 @@ import com.example.jetcaster.core.designsystem.component.PodcastImage
 import com.example.jetcaster.ui.home.discover.discoverItems
 import com.example.jetcaster.ui.home.library.libraryItems
 import com.example.jetcaster.ui.podcast.PodcastDetailsScreen
-import com.example.jetcaster.shared.podcast.PodcastDetailsViewModel
 import com.example.jetcaster.ui.theme.JetcasterTheme
 import com.example.jetcaster.ui.tooling.DevicePreviews
 import com.example.jetcaster.util.ToggleFollowPodcastIconButton
@@ -120,14 +119,13 @@ import kotlin.time.Instant
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
-import org.koin.core.parameter.parametersOf
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 private fun <T> ThreePaneScaffoldNavigator<T>.isMainPaneHidden(): Boolean =
     scaffoldValue[SupportingPaneScaffoldRole.Main] == PaneAdaptedValue.Hidden
 
 /**
- * Copied from `calculatePaneScaffoldDirective()` in [PaneScaffoldDirective], with modifications to
+ * Copied from `calculatePaneScaffoldDirective()` in [androidx.compose.material3.adaptive.layout.PaneScaffoldDirective], with modifications to
  * only show 1 pane horizontally if either width or height size class is compact.
  */
 fun calculateScaffoldDirective(
@@ -182,7 +180,7 @@ fun calculateScaffoldDirective(
 }
 
 /**
- * Copied from `getExcludedVerticalBounds()` in [PaneScaffoldDirective] since it is private.
+ * Copied from `getExcludedVerticalBounds()` in [androidx.compose.material3.adaptive.layout.PaneScaffoldDirective] since it is private.
  */
 private fun getExcludedVerticalBounds(posture: Posture, hingePolicy: HingePolicy): List<Rect> = when (hingePolicy) {
     HingePolicy.AvoidSeparating -> posture.separatingVerticalHingeBounds
