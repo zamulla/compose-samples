@@ -37,6 +37,7 @@ dependencyResolutionManagement {
 rootProject.name = "Jetcaster"
 include(
     ":mobile",
+    ":sharedUi",
     ":core:data",
     ":core:data-testing",
     ":core:domain",
