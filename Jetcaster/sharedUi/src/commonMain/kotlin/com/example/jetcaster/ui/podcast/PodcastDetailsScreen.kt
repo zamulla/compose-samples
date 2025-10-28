@@ -322,12 +322,16 @@ fun PodcastDetailsDescription(podcast: PodcastInfo, modifier: Modifier) {
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun PodcastDetailsHeaderItemButtons(isSubscribed: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun PodcastDetailsHeaderItemButtons(
+    isSubscribed: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     var isNotificationOn by remember { mutableStateOf(false) }
     val interactionSource1 = remember { MutableInteractionSource() }
     val interactionSource2 = remember { MutableInteractionSource() }
     ButtonGroup(
-        overflowIndicator = { },
+        overflowIndicator = {},
         modifier = modifier,
     ) {
         customItem(
