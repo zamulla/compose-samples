@@ -107,7 +107,7 @@ import com.example.jetcaster.designsystem.component.PodcastImage
 import com.example.jetcaster.ui.home.discover.discoverItems
 import com.example.jetcaster.ui.home.library.libraryItems
 import com.example.jetcaster.ui.podcast.PodcastDetailsScreen
-import com.example.jetcaster.ui.podcast.PodcastDetailsViewModel
+import com.example.jetcaster.shared.podcast.PodcastDetailsViewModel
 import com.example.jetcaster.ui.theme.JetcasterTheme
 import com.example.jetcaster.ui.tooling.DevicePreviews
 import com.example.jetcaster.util.ToggleFollowPodcastIconButton
@@ -282,12 +282,8 @@ private fun HomeScreenReady(
             supportingPane = {
                 val podcastUri = navigator.currentDestination?.contentKey
                 if (!podcastUri.isNullOrEmpty()) {
-                    val podcastDetailsViewModel = koinViewModel<PodcastDetailsViewModel>(
-                        key = podcastUri,
-                        parameters = { parametersOf(podcastUri) }
-                    )
                     PodcastDetailsScreen(
-                        viewModel = podcastDetailsViewModel,
+                        podcastUri = podcastUri,
                         navigateToPlayer = navigateToPlayer,
                         navigateBack = {
                             if (navigator.canNavigateBack()) {

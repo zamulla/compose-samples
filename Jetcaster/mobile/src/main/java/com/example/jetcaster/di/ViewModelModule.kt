@@ -18,7 +18,6 @@ package com.example.jetcaster.di
 
 import com.example.jetcaster.ui.home.HomeViewModel
 import com.example.jetcaster.ui.player.PlayerViewModel
-import com.example.jetcaster.ui.podcast.PodcastDetailsViewModel
 import org.koin.core.module.dsl.viewModel
 
 import org.koin.dsl.module
@@ -34,7 +33,7 @@ val viewModelModule = module {
             episodeStore = get(),
             podcastCategoryFilterUseCase = get(),
             filterableCategoriesUseCase = get(),
-            episodePlayer = get()
+            episodePlayer = get(),
         )
     }
 
@@ -42,16 +41,7 @@ val viewModelModule = module {
         PlayerViewModel(
             episodeStore = get(),
             episodePlayer = get(),
-            savedStateHandle = get()
-        )
-    }
-
-    viewModel { parameters ->
-        PodcastDetailsViewModel(
-            podcastUri = parameters.get(),
-            podcastStore = get(),
-            episodeStore = get(),
-            episodePlayer = get()
+            savedStateHandle = get(),
         )
     }
 }
