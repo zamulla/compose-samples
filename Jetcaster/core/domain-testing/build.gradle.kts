@@ -16,62 +16,32 @@
 
 
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.android.kotlin.multiplatform.library)
 }
 
 kotlin {
+    androidLibrary {
+        namespace = "com.example.jetcaster.core.domain.testing"
+        compileSdk = libs.versions.compileSdk.get().toInt()
+        minSdk = libs.versions.minSdk.get().toInt()
+    }
+
+    jvmToolchain(17)
     compilerOptions {
         freeCompilerArgs.add("-opt-in=kotlin.time.ExperimentalTime")
     }
-}
 
-android {
-    namespace = "com.example.jetcaster.core.domain.testing"
-    compileSdk =
-        libs.versions.compileSdk
-            .get()
-            .toInt()
+    jvm()
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
-    defaultConfig {
-        minSdk =
-            libs.versions.minSdk
-                .get()
-                .toInt()
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
-            )
+    sourceSets {
+        commonMain.dependencies {
+            implementation(projects.core.domain)
+            implementation(libs.kotlinx.datetime)
+            implementation(libs.kotlinx.coroutines.core)
         }
     }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-}
-
-dependencies {
-    implementation(projects.core.domain)
-
-    coreLibraryDesugaring(libs.core.jdk.desugaring)
-
-    implementation(libs.kotlinx.datetime)
-
-    testImplementation(libs.kotlinx.test.core)
-    testImplementation(libs.kotlinx.test.junit)
-    testImplementation(libs.kotlinx.test.annotations.common)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.androidx.test.espresso.core)
 }
