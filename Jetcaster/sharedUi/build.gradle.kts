@@ -56,10 +56,10 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
 
-            implementation(compose.material3)
-            implementation(libs.compose.material3.adaptive)
-            implementation(libs.compose.material3.adaptive.layout)
-            implementation(libs.compose.material3.adaptive.navigation)
+            implementation(libs.compose.material3)
+            //implementation(libs.compose.material3.adaptive)
+            //implementation(libs.compose.material3.adaptive.layout)
+            //implementation(libs.compose.material3.adaptive.navigation)
 
             implementation(compose.ui)
             // TODO this needs to be added, otherwise BackHandler build fails unresolved
