@@ -73,6 +73,7 @@ kotlin {
 
             implementation(libs.uri.kmp)
             implementation(libs.kotlinx.datetime)
+            implementation(libs.kotlinx.collections.immutable)
 
             implementation(libs.androidx.lifecycle.runtime.compose)
 
