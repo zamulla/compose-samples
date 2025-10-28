@@ -7,6 +7,7 @@ import com.example.jetcaster.core.data.di.dataModule
 import com.example.jetcaster.core.data.di.otherModule
 import com.example.jetcaster.core.di.domainModule
 import com.example.jetcaster.shared.podcast.PodcastDetailsViewModel
+import com.example.jetcaster.ui.home.HomeViewModel
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
@@ -24,6 +25,18 @@ val sharedUiModule = module {
     }
 
 }
+
+val sharedViewModelModule = module {
+    viewModel {
+        HomeViewModel(
+            podcastsRepository = get(),
+            podcastStore = get(),
+            episodeStore = get(),
+            podcastCategoryFilterUseCase = get(),
+            filterableCategoriesUseCase = get(),
+            episodePlayer = get(),
+        )
+    }
 
 val viewModelModule = module {
     viewModel { parameters ->
