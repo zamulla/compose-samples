@@ -18,6 +18,7 @@ package com.example.jetcaster.core.data.di
 
 import androidx.room.Room
 import coil.ImageLoader
+import coil.request.CachePolicy
 import com.example.jetcaster.core.data.BuildConfig
 import com.example.jetcaster.core.data.JetcasterDispatchers
 import com.example.jetcaster.core.data.JetcasterDispatchers.ioDispatcher
@@ -97,7 +98,6 @@ val dataModule = module {
 
     single {
         PodcastsFetcher(
-            okHttpClient = get<OkHttpClient>(),
             ioDispatcher = get<CoroutineDispatcher>(ioDispatcher),
             )
     }
