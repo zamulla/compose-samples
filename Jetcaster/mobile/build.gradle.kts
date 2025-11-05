@@ -119,6 +119,7 @@ dependencies {
     // Dependency injection
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
+    implementation(libs.koin.compose.viewmodel)
     implementation(libs.koin.androidx.compose.navigation)
 
     // Compose

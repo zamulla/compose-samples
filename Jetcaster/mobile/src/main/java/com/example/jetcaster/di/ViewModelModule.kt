@@ -19,7 +19,7 @@ package com.example.jetcaster.di
 import com.example.jetcaster.ui.home.HomeViewModel
 import com.example.jetcaster.ui.player.PlayerViewModel
 import com.example.jetcaster.ui.podcast.PodcastDetailsViewModel
-import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 /**
