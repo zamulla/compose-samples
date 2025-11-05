@@ -37,13 +37,11 @@ dependencyResolutionManagement {
 rootProject.name = "Jetcaster"
 include(
     ":mobile",
+    ":sharedUi",
     ":core:data",
     ":core:data-testing",
     ":core:domain",
     ":core:domain-testing",
-    ":core:designsystem",
-    ":tv",
-    ":wear",
-    ":glancewidget"
+    ":core:designsystem"
 )
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

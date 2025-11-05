@@ -1,24 +1,18 @@
-# Gradle
-.gradle
-build/
-
-captures
-
-/local.properties
-
-# IntelliJ .idea folder
-.idea/workspace.xml
-.idea/libraries
-.idea/caches
-.idea/navEditor.xml
-.idea/tasks.xml
-.idea/modules.xml
-.idea/compiler.xml
-/.idea/jarRepositories.xml
-gradle.xml
 *.iml
-
-# General
+.kotlin
+.gradle
+**/build/
+xcuserdata
+!src/**/build/
+local.properties
+.idea
 .DS_Store
+captures
 .externalNativeBuild
-.kotlin/
+.cxx
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+**/xcshareddata/WorkspaceSettings.xcsettings
