@@ -70,6 +70,7 @@ kotlinxDatetime = "0.7.1"
 cmp-m3-adaptive = "1.2.0-beta01"
 uriKmp = "0.0.20"
 navigationCompose = "2.9.1"
+konnectivity = "0.1-alpha01"
 
 [libraries]
 accompanist-adaptive = { module = "com.google.accompanist:accompanist-adaptive", version.ref = "accompanist" }
@@ -150,6 +151,7 @@ koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", ver
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 koin-androidx-compose-navigation = { module = "io.insert-koin:koin-androidx-compose-navigation", version.ref = "koin" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+konnectivity = { module = "com.plusmobileapps:konnectivity", version.ref = "konnectivity" }
 coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 core-jdk-desugaring = { module = "com.android.tools:desugar_jdk_libs", version.ref = "jdkDesugar" }
 compose-material3-adaptive = { module = "org.jetbrains.compose.material3.adaptive:adaptive", version.ref = "cmp-m3-adaptive" }
