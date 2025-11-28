@@ -33,6 +33,7 @@ androix-test-uiautomator = "2.3.0"
 coil = "3.3.0"
 rssparser = "6.0.12"
 koin = "4.1.1"
+konnectivity = "0.1-alpha01"
 # @keep
 compileSdk = "36"
 coroutines = "1.10.2"
@@ -178,6 +179,7 @@ horologist-media-uimaterial3 = { module = "com.google.android.horologist:horolog
 horologist-media-ui-model = { module = "com.google.android.horologist:horologist-media-ui-model", version.ref = "horologist" }
 horologist-roboscreenshots = { module = "com.google.android.horologist:horologist-roboscreenshots", version.ref = "horologist" }
 junit = { module = "junit:junit", version.ref = "junit" }
+konnectivity = { module = "com.plusmobileapps:konnectivity", version.ref = "konnectivity" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx_immutable" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
