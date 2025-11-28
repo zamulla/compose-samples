@@ -281,7 +281,7 @@ private fun PlayerContentVertical(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier) {
-        Row(Modifier.fillMaxHeight(0.5f)) {
+        Row(Modifier.fillMaxHeight(0.20f)) {
             PlayerContentTableTopTop(
                 uiState = uiState,
             )
@@ -326,7 +326,7 @@ private fun PlayerContentHorizontal(
             ) {
                 PlayerContentBookStart(uiState = uiState)
             }
-            Column( Modifier.fillMaxWidth(0.5f)) {
+            Column(Modifier.fillMaxWidth()) {
                 PlayerContentBookEnd(
                     uiState = uiState,
                     playerControlActions = playerControlActions,
@@ -374,13 +374,12 @@ private fun PlayerContentRegular(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(horizontal = 8.dp),
         ) {
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(16.dp))
             with(sharedTransitionScope) {
                 with(animatedVisibilityScope) {
                     PlayerImage(
                         podcastImageUrl = currentEpisode.podcastImageUrl,
                         modifier = Modifier
-                            .weight(10f)
                             .animateEnterExit(
                                 enter = fadeIn(spring(stiffness = Spring.StiffnessLow)),
                                 exit = fadeOut(),
@@ -395,9 +394,9 @@ private fun PlayerContentRegular(
                         ),
                     )
                 }
-                Spacer(modifier = Modifier.height(32.dp))
+                Spacer(modifier = Modifier.height(16.dp))
                 PodcastDescription(currentEpisode.title, currentEpisode.podcastName)
-                Spacer(modifier = Modifier.height(32.dp))
+                Spacer(modifier = Modifier.height(16.dp))
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.weight(10f),
@@ -420,7 +419,7 @@ private fun PlayerContentRegular(
                         Modifier.padding(vertical = 8.dp),
                     )
                 }
-                Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.height(16.dp))
             }
         }
     }
@@ -446,7 +445,7 @@ private fun PlayerContentTableTopTop(uiState: PlayerUiState, modifier: Modifier 
                     WindowInsetsSides.Horizontal + WindowInsetsSides.Top,
                 ),
             )
-            .padding(32.dp),
+            .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         PlayerImage(episode.podcastImageUrl)
@@ -474,7 +473,7 @@ private fun PlayerContentTableTopBottom(
                     WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom,
                 ),
             )
-            .padding(horizontal = 32.dp, vertical = 8.dp),
+            .padding(horizontal = 8.dp, vertical = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         TopAppBar(
@@ -522,8 +521,8 @@ private fun PlayerContentBookStart(uiState: PlayerUiState, modifier: Modifier = 
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(
-                vertical = 40.dp,
-                horizontal = 16.dp,
+                vertical = 8.dp,
+                horizontal = 8.dp,
             ),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -549,12 +548,12 @@ private fun PlayerContentBookEnd(uiState: PlayerUiState, playerControlActions: P
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceAround,
     ) {
-        PlayerImage(
-            podcastImageUrl = episode.podcastImageUrl,
-            modifier = Modifier
-                .padding(vertical = 16.dp)
-                .weight(1f),
-        )
+//        PlayerImage(
+//            podcastImageUrl = episode.podcastImageUrl,
+//            modifier = Modifier
+//                .padding(vertical = 16.dp)
+//                .weight(1f),
+//        )
         PlayerSlider(
             timeElapsed = episodePlayerState.timeElapsed,
             episodeDuration = episode.duration,
@@ -607,7 +606,7 @@ private fun PlayerImage(podcastImageUrl: String, modifier: Modifier = Modifier, 
         contentDescription = null,
         contentScale = ContentScale.Crop,
         modifier = modifier
-            .sizeIn(maxWidth = 500.dp, maxHeight = 500.dp)
+            .sizeIn(maxWidth = 150.dp, maxHeight = 150.dp)
             .aspectRatio(1f)
             .clip(MaterialTheme.shapes.medium),
         imageModifier = imageModifier,
@@ -618,7 +617,7 @@ private fun PlayerImage(podcastImageUrl: String, modifier: Modifier = Modifier, 
 private fun PodcastDescription(title: String, podcastName: String) {
     Text(
         text = title,
-        style = MaterialTheme.typography.displayLarge,
+        style = MaterialTheme.typography.displaySmall,
         maxLines = 2,
         color = MaterialTheme.colorScheme.onSurface,
         modifier = Modifier.basicMarquee(),
@@ -637,8 +636,8 @@ private fun PodcastInformation(
     name: String,
     summary: String,
     modifier: Modifier = Modifier,
-    titleTextStyle: TextStyle = MaterialTheme.typography.headlineLarge,
-    nameTextStyle: TextStyle = MaterialTheme.typography.displaySmall,
+    titleTextStyle: TextStyle = MaterialTheme.typography.displaySmall,
+    nameTextStyle: TextStyle = MaterialTheme.typography.bodyLarge,
 ) {
     Column(
         modifier = modifier.padding(horizontal = 8.dp),
@@ -646,14 +645,14 @@ private fun PodcastInformation(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = name,
-            style = nameTextStyle,
+            text = title,
+            style = titleTextStyle,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
         Text(
-            text = title,
-            style = titleTextStyle,
+            text = name,
+            style = nameTextStyle,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
@@ -683,7 +682,7 @@ private fun PlayerSlider(
     Column(
         Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = 4.dp),
     ) {
         var sliderValue by remember(timeElapsed) { mutableStateOf(timeElapsed) }
         val maxRange = (episodeDuration?.toInt(DurationUnit.SECONDS) ?: 0).toFloat()
@@ -745,8 +744,8 @@ private fun PlayerButtons(
                 checkedShape = RoundedCornerShape(30.dp),
             ),
             modifier = Modifier
-                .width(186.dp)
-                .height(136.dp),
+                .width(98.dp)
+                .height(72.dp),
         ) {
             Icon(
                 painterResource(if (isPlaying) Res.drawable.ic_pause else Res.drawable.ic_play_arrow),
