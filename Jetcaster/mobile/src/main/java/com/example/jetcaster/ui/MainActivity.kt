@@ -20,25 +20,29 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.example.jetcaster.glancewidget.updateWidgetPreview
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
+import androidx.compose.runtime.CompositionLocalProvider
+import com.example.jetcaster.core.data.network.OnlineChecker
+//import com.example.jetcaster.glancewidget.updateWidgetPreview
 import com.example.jetcaster.ui.theme.JetcasterTheme
 import com.google.accompanist.adaptive.calculateDisplayFeatures
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.compose.koinInject
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         enableEdgeToEdge()
-        updateWidgetPreview(this)
-        setContent {
-            val displayFeatures = calculateDisplayFeatures(this)
 
-            JetcasterTheme {
-                JetcasterApp(
-                    displayFeatures,
-                )
+        setContent {
+            val adaptiveInfo = currentWindowAdaptiveInfo()
+            val appState = rememberJetcasterAppState(onlineChecker = koinInject<OnlineChecker>())
+            CompositionLocalProvider(LocalDisplayFeatures provides calculateDisplayFeatures(this)) {
+                JetcasterTheme {
+                    JetcasterApp(
+                        adaptiveInfo = adaptiveInfo,
+                        appState = appState
+                    )
+                }
             }
         }
     }

@@ -1,0 +1,73 @@
+/*
+ * Copyright 2024 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.example.jetcaster.core.designsystem.component
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalInspectionMode
+import org.jetbrains.compose.resources.painterResource
+import coil3.compose.AsyncImage
+import coil3.compose.AsyncImagePainter
+import coil3.compose.LocalPlatformContext
+import coil3.compose.rememberAsyncImagePainter
+import coil3.request.ImageRequest
+import coil3.request.crossfade
+import com.example.jetcaster.core.designsystem.Res
+import com.example.jetcaster.core.designsystem.img_empty
+
+@Composable
+fun PodcastImage(
+    podcastImageUrl: String,
+    contentDescription: String?,
+    modifier: Modifier = Modifier,
+    // TODO: Remove the nested component modifier when shared elements are applied to entire app
+    imageModifier: Modifier = Modifier,
+    contentScale: ContentScale = ContentScale.Crop,
+) {
+    if (LocalInspectionMode.current) {
+        Box(modifier = modifier.background(MaterialTheme.colorScheme.primary))
+        return
+    }
+
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center,
+    ) {
+        AsyncImage(
+            model = ImageRequest.Builder(LocalPlatformContext.current)
+                .data(podcastImageUrl)
+                .crossfade(true)
+                .build(),
+            placeholder = painterResource(Res.drawable.img_empty),
+            contentDescription = contentDescription,
+            contentScale = contentScale,
+            modifier = modifier.then(imageModifier),
+        )
+    }
+}

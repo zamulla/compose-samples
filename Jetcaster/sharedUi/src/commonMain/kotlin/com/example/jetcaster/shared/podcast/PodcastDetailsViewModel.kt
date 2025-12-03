@@ -1,0 +1,68 @@
+package com.example.jetcaster.shared.podcast
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.jetcaster.core.data.repository.EpisodeStore
+import com.example.jetcaster.core.data.repository.PodcastStore
+import com.example.jetcaster.core.model.EpisodeInfo
+import com.example.jetcaster.core.model.PodcastInfo
+import com.example.jetcaster.core.model.asDaoModel
+import com.example.jetcaster.core.model.asExternalModel
+import com.example.jetcaster.core.player.EpisodePlayer
+import com.example.jetcaster.core.player.model.PlayerEpisode
+import com.eygraber.uri.Uri
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+
+sealed interface PodcastUiState {
+    data object Loading : PodcastUiState
+    data class Ready(val podcast: PodcastInfo, val episodes: List<EpisodeInfo>) : PodcastUiState
+}
+
+/**
+ * ViewModel that handles the business logic and screen state of the Podcast details screen.
+ */
+class PodcastDetailsViewModel(
+    private val episodeStore: EpisodeStore,
+    private val episodePlayer: EpisodePlayer,
+    private val podcastStore: PodcastStore,
+    private val podcastUri: String,
+) : ViewModel() {
+
+    private val decodedPodcastUri = Uri.decode(podcastUri)
+
+    val state: StateFlow<PodcastUiState> =
+        combine(
+            podcastStore.podcastWithExtraInfo(decodedPodcastUri),
+            episodeStore.episodesInPodcast(decodedPodcastUri),
+        ) { podcast, episodeToPodcasts ->
+            val episodes = episodeToPodcasts.map { it.episode.asExternalModel() }
+            PodcastUiState.Ready(
+                podcast = podcast.podcast.asExternalModel().copy(isSubscribed = podcast.isFollowed),
+                episodes = episodes,
+            )
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = PodcastUiState.Loading,
+        )
+
+    fun toggleSubscribe(podcast: PodcastInfo) {
+        viewModelScope.launch {
+            podcastStore.togglePodcastFollowed(podcast.uri)
+        }
+    }
+
+    fun onQueueEpisode(playerEpisode: PlayerEpisode) {
+        episodePlayer.addToQueue(playerEpisode)
+    }
+
+    fun deleteEpisode(episodeInfo: EpisodeInfo) {
+        viewModelScope.launch {
+            episodeStore.deleteEpisode(episodeInfo.asDaoModel())
+        }
+    }
+}
