@@ -19,8 +19,13 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
-    alias(libs.plugins.compose)
+    alias(libs.plugins.compose.compiler)
+}
+
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-opt-in=kotlin.time.ExperimentalTime")
+    }
 }
 
 android {
@@ -118,9 +123,11 @@ dependencies {
     implementation(libs.androidx.palette)
 
     // Dependency injection
-    implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+    implementation(libs.koin.compose.viewmodel)
+    implementation(libs.koin.androidx.compose.navigation)
+    implementation(libs.koin.core)
 
     // Compose
     implementation(libs.androidx.activity.compose)
@@ -139,7 +146,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
 
     implementation(libs.androidx.window)
-    implementation(libs.androidx.window.core)
+    //implementation(libs.androidx.window.core)
 
     implementation(libs.accompanist.adaptive)
 
@@ -147,9 +154,13 @@ dependencies {
 
     implementation(projects.core.data)
     implementation(projects.core.designsystem)
+    implementation(projects.core.designsystem)
     implementation(projects.core.domain)
-    implementation(projects.glancewidget)
+    //implementation(projects.glancewidget)
+    implementation(projects.sharedUi)
     implementation(projects.core.domainTesting)
 
     coreLibraryDesugaring(libs.core.jdk.desugaring)
+
+    implementation(libs.kotlinx.datetime)
 }

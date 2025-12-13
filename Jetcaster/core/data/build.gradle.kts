@@ -16,80 +16,93 @@
 
 
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.android.kotlin.multiplatform.library)
+    alias(libs.plugins.androidx.room)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
 }
 
-android {
-    namespace = "com.example.jetcaster.core.data"
-    compileSdk =
-        libs.versions.compileSdk
-            .get()
-            .toInt()
+kotlin {
+    androidLibrary {
+        namespace = "com.example.jetcaster.core.data"
+        compileSdk = libs.versions.compileSdk.get().toInt()
+        minSdk = libs.versions.minSdk.get().toInt()
 
-    defaultConfig {
-        minSdk =
-            libs.versions.minSdk
-                .get()
-                .toInt()
+        withHostTestBuilder {
+        }
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildFeatures {
-        buildConfig = true
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        withDeviceTestBuilder {
+            sourceSetTreeName = "test"
+        }.configure {
+            instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
     }
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+
+    jvmToolchain(17)
+    compilerOptions {
+        freeCompilerArgs.add("-opt-in=kotlin.time.ExperimentalTime")
     }
-    kotlinOptions {
-        jvmTarget = "17"
+
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+
+    // Desktop target (JVM)
+    jvm()
+
+    sourceSets {
+        commonMain.dependencies {
+            // TODO I think we shouldn't have compose runtime in data-layer, but we have @Immutable or @Stable annotations there
+            //implementation(libs.compose.runtime)
+            implementation("androidx.compose.runtime:runtime-annotation:1.9.0")
+            implementation("androidx.compose.runtime:runtime:1.9.0")
+
+            // Dependency injection
+            implementation(libs.koin.core)
+            // Database
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.androidx.sqlite.bundled)
+
+            // RSS Parser library
+            implementation(libs.rssparser)
+            implementation(libs.kotlinx.coroutines.core)
+            // Dates and times
+            implementation(libs.kotlinx.datetime)
+
+        }
+
+        androidMain.dependencies {
+            implementation(libs.kotlinx.coroutines.android)
+//            coreLibraryDesugaring(libs.core.jdk.desugaring)
+        }
+
+        iosMain.dependencies {
+            implementation(libs.konnectivity)
+        }
+
+        commonTest.dependencies {
+            implementation(libs.kotlinx.test.core)
+            implementation(libs.kotlinx.coroutines.test)
+        }
+
+        getByName("androidDeviceTest").dependencies {
+            implementation(libs.kotlinx.test.junit)
+            implementation(libs.kotlinx.test.annotations.common)
+            implementation(libs.androidx.test.runner)
+            implementation(libs.androidx.test.core)
+            implementation(libs.androidx.test.ext.junit)
+        }
     }
 }
+
+room {
+    schemaDirectory("$projectDir/schemas")
+}
+
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.compose.runtime)
-
-    // Image loading
-    implementation(libs.coil.kt.compose)
-
-    // Compose
-    val composeBom = platform(libs.androidx.compose.bom)
-    implementation(composeBom)
-
-    // Dependency injection
-    implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-
-    // Networking
-    implementation(libs.okhttp3)
-    implementation(libs.okhttp.logging)
-
-    // Database
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
-
-    implementation(libs.rometools.rome)
-    implementation(libs.rometools.modules)
-
-    coreLibraryDesugaring(libs.core.jdk.desugaring)
-
-    // Testing
-    testImplementation(libs.junit)
-    testImplementation(libs.kotlinx.coroutines.test)
+    add("kspAndroid", libs.androidx.room.compiler)
+    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
+    add("kspIosX64", libs.androidx.room.compiler)
+    add("kspJvm", libs.androidx.room.compiler)
+    add("kspIosArm64", libs.androidx.room.compiler)
 }
